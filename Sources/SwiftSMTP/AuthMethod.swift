@@ -18,6 +18,8 @@ import Foundation
 
 /// Supported authentication methods for logging into the SMTP server.
 public enum AuthMethod: String {
+	/// For a local connection that is locked down at a firewall level
+	case none = "NONE"
     /// CRAM-MD5 authentication.
     case cramMD5 = "CRAM-MD5"
     /// LOGIN authentication.

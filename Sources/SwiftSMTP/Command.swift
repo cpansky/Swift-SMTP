@@ -58,6 +58,7 @@ enum Command {
         case .starttls: return [.serviceReady]
         case .auth(let method, _):
             switch method {
+			case .none: return [.authSucceeded]
             case .cramMD5: return [.containingChallenge]
             case .login: return [.containingChallenge]
             case .plain: return [.authSucceeded]

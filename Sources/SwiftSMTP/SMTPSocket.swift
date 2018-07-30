@@ -48,8 +48,11 @@ struct SMTPSocket {
                 throw SMTPError.requiredSTARTTLS
             }
         }
-        let authMethod = try getAuthMethod(authMethods: authMethods, serverOptions: serverOptions, hostname: hostname)
-        try login(authMethod: authMethod, email: email, password: password)
+		
+		if authMethods[AuthMethod.none.rawValue] == nil {
+			let authMethod = try getAuthMethod(authMethods: authMethods, serverOptions: serverOptions, hostname: hostname)
+			try login(authMethod: authMethod, email: email, password: password)
+		}
     }
 
     func write(_ text: String) throws {
@@ -186,6 +189,8 @@ private extension SMTPSocket {
 
     func login(authMethod: AuthMethod, email: String, password: String) throws {
         switch authMethod {
+		case .none:
+			return
         case .cramMD5:
             try loginCramMD5(email: email, password: password)
         case .login:
